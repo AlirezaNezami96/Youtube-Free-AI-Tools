@@ -1,0 +1,17 @@
+[Unit]
+Description=YouTube Tools Platform Go Backend Service
+After=network.target
+
+[Service]
+Type=simple
+User=youtube-tools
+Group=youtube-tools
+WorkingDirectory=/var/www/youtube-tools/backend
+EnvironmentFile=/etc/youtube-tools/backend.env
+ExecStart=/var/www/youtube-tools/backend/youtube-tools-server
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
