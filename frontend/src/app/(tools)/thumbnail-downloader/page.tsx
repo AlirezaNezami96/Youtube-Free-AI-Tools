@@ -67,7 +67,6 @@ export default function ThumbnailDownloaderPage() {
 
 	return (
 		<ToolPageLayout
-			slug="thumbnail-downloader"
 			title="Thumbnail Downloader"
 			description="Grab high-quality YouTube video thumbnails at multiple resolutions with custom fallbacks."
 			iconName="Image"

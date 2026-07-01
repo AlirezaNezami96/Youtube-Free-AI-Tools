@@ -47,7 +47,6 @@ export default function ChannelIdFinderPage() {
 
 	return (
 		<ToolPageLayout
-			slug="channel-id-finder"
 			title="Channel ID Finder"
 			description="Resolves unique channel IDs (UC...) from handles, custom names, or standard URLs, and extracts RSS links."
 			iconName="UserCheck"

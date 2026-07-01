@@ -59,7 +59,6 @@ export default function PlaylistDurationCalculatorPage() {
 
 	return (
 		<ToolPageLayout
-			slug="playlist-duration-calculator"
 			title="Playlist Duration Calculator"
 			description="Calculate the total duration of a YouTube playlist and analyze it at different speed multipliers."
 			iconName="Clock"

@@ -48,7 +48,6 @@ export default function YoutubeIdExtractorPage() {
 
 	return (
 		<ToolPageLayout
-			slug="youtube-id-extractor"
 			title="YouTube ID Extractor"
 			description="Extracts raw video IDs, playlist IDs, channel IDs, or handles from any YouTube input URL."
 			iconName="Hash"

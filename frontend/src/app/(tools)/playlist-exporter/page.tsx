@@ -64,7 +64,6 @@ export default function PlaylistExporterPage() {
 
 	return (
 		<ToolPageLayout
-			slug="playlist-exporter"
 			title="Playlist Exporter"
 			description="Export YouTube playlist metadata including titles, URLs, and video durations to CSV or JSON format."
 			iconName="FileSpreadsheet"

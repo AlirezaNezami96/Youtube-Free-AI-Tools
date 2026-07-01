@@ -86,7 +86,6 @@ export default function TranscriptDownloaderPage() {
 
 	return (
 		<ToolPageLayout
-			slug="transcript-downloader"
 			title="Transcript Downloader"
 			description="Download video transcripts as structured SRT or VTT files with timestamps."
 			iconName="Download"

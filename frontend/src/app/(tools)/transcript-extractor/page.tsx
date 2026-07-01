@@ -64,7 +64,6 @@ export default function TranscriptExtractorPage() {
 
 	return (
 		<ToolPageLayout
-			slug="transcript-extractor"
 			title="Transcript Extractor"
 			description="Extract full transcripts from YouTube videos in plain, clean text."
 			iconName="FileText"

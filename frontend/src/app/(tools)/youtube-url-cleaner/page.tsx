@@ -48,7 +48,6 @@ export default function YoutubeUrlCleanerPage() {
 
 	return (
 		<ToolPageLayout
-			slug="youtube-url-cleaner"
 			title="YouTube URL Cleaner"
 			description="Strips unnecessary tracking codes, sharing arguments, and referrals from YouTube URLs."
 			iconName="Sparkles"

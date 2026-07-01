@@ -91,7 +91,6 @@ export default function TimestampGeneratorPage() {
 
 	return (
 		<ToolPageLayout
-			slug="timestamp-generator"
 			title="Timestamp Generator"
 			description="Generate clickable timestamp deep-links and copy-paste descriptions for YouTube chapters."
 			iconName="ListStart"

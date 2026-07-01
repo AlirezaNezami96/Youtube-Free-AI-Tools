@@ -83,7 +83,6 @@ export default function VideoMetadataViewerPage() {
 
 	return (
 		<ToolPageLayout
-			slug="video-metadata-viewer"
 			title="Video Metadata Viewer"
 			description="Inspect detailed metadata, metadata tags, and get raw JSON payloads for any YouTube video."
 			iconName="Info"
