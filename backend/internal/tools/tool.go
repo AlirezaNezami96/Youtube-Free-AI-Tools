@@ -6,8 +6,9 @@ import (
 
 type Request struct {
 	URL        string            `json:"url"`
+	URLs       []string          `json:"urls,omitempty"`       // bulk tools: multiple video URLs
 	Options    map[string]string `json:"options"`
-	Timestamps []TimestampRow    `json:"timestamps,omitempty"` // for timestamp generator if needed
+	Timestamps []TimestampRow    `json:"timestamps,omitempty"` // for timestamp generator
 }
 
 type TimestampRow struct {

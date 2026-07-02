@@ -7,16 +7,17 @@ import (
 )
 
 type Config struct {
-	Port                  string
-	AllowedOrigins        []string
-	RateLimitRate         float64
-	RateLimitBurst        int
-	MaxPlaylistSize       int
-	MaxConcurrentYtDlp    int
-	TempDir               string
-	YtDlpPath             string
-	CookiesPath           string
-	ProxyURL              string
+	Port                       string
+	AllowedOrigins             []string
+	RateLimitRate              float64
+	RateLimitBurst             int
+	MaxPlaylistSize             int
+	MaxConcurrentYtDlp         int
+	TempDir                    string
+	YtDlpPath                  string
+	CookiesPath                string
+	ProxyURL                   string
+	FirebaseServiceAccountPath string
 }
 
 func Load() *Config {
@@ -39,17 +40,20 @@ func Load() *Config {
 	cookiesPath := getEnv("YOUTUBE_COOKIES_PATH", "")
 	proxyURL := getEnv("HTTP_PROXY", getEnv("HTTPS_PROXY", ""))
 
+	firebaseSAPath := getEnv("FIREBASE_SERVICE_ACCOUNT_PATH", "")
+
 	return &Config{
-		Port:                port,
-		AllowedOrigins:      origins,
-		RateLimitRate:       rateLimitRate,
-		RateLimitBurst:      rateLimitBurst,
-		MaxPlaylistSize:     maxPlaylistSize,
-		MaxConcurrentYtDlp: maxConcurrentYtDlp,
-		TempDir:             tempDir,
-		YtDlpPath:           ytDlpPath,
-		CookiesPath:         cookiesPath,
-		ProxyURL:            proxyURL,
+		Port:                       port,
+		AllowedOrigins:             origins,
+		RateLimitRate:              rateLimitRate,
+		RateLimitBurst:             rateLimitBurst,
+		MaxPlaylistSize:            maxPlaylistSize,
+		MaxConcurrentYtDlp:        maxConcurrentYtDlp,
+		TempDir:                    tempDir,
+		YtDlpPath:                  ytDlpPath,
+		CookiesPath:                cookiesPath,
+		ProxyURL:                   proxyURL,
+		FirebaseServiceAccountPath: firebaseSAPath,
 	}
 }
 

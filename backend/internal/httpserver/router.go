@@ -20,12 +20,13 @@ import (
 )
 
 type Server struct {
-	router  *chi.Mux
-	config  *config.Config
-	dlStore *downloads.Store
+	router      *chi.Mux
+	config      *config.Config
+	dlStore     *downloads.Store
+	appCheck    *middleware.AppCheckVerifier
 }
 
-func New(cfg *config.Config, dlStore *downloads.Store) *Server {
+func New(cfg *config.Config, dlStore *downloads.Store, appCheck *middleware.AppCheckVerifier) *Server {
 	r := chi.NewRouter()
 
 	// Standard middlewares
@@ -38,9 +39,10 @@ func New(cfg *config.Config, dlStore *downloads.Store) *Server {
 	r.Use(middleware.RateLimit(rate.Limit(cfg.RateLimitRate), cfg.RateLimitBurst))
 
 	s := &Server{
-		router:  r,
-		config:  cfg,
-		dlStore: dlStore,
+		router:   r,
+		config:   cfg,
+		dlStore:  dlStore,
+		appCheck: appCheck,
 	}
 
 	s.setupRoutes()
@@ -57,15 +59,18 @@ func (s *Server) setupRoutes() {
 	// Download serving route
 	s.router.Get("/api/v1/downloads/{token}", s.handleDownload)
 
-	// Mount routes for registered tools dynamically
-	for _, tool := range tools.All() {
-		slug := tool.Slug()
-		t := tool // capture loop variable
-		slog.Info("Mounting tool route", "slug", slug)
-		s.router.Post("/api/v1/tools/"+slug, func(w http.ResponseWriter, r *http.Request) {
-			s.handleToolCall(w, r, t)
-		})
-	}
+	// Mount routes for registered tools dynamically — with App Check middleware
+	s.router.Group(func(r chi.Router) {
+		r.Use(s.appCheck.Middleware)
+		for _, tool := range tools.All() {
+			slug := tool.Slug()
+			t := tool // capture loop variable
+			slog.Info("Mounting tool route", "slug", slug)
+			r.Post("/api/v1/tools/"+slug, func(w http.ResponseWriter, r *http.Request) {
+				s.handleToolCall(w, r, t)
+			})
+		}
+	})
 }
 
 func (s *Server) handleToolCall(w http.ResponseWriter, r *http.Request, t tools.Tool) {

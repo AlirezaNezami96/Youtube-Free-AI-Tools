@@ -19,7 +19,7 @@ func New(ytClient *ytdlp.Client) *Tool {
 }
 
 func (t *Tool) Slug() string {
-	return "channel-id-finder"
+	return "channel-rss-feed-generator"
 }
 
 func (t *Tool) Validate(req tools.Request) error {

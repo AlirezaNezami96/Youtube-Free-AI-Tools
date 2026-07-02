@@ -9,10 +9,14 @@ interface ToolPageLayoutProps {
 	title: string;
 	description: string;
 	iconName: string;
-	inputType: "video" | "playlist" | "channel";
-	onSubmit: (url: string) => void;
-	isLoading: boolean;
+	// Standard URL input props (used when inputNode is not provided)
+	inputType?: "video" | "playlist" | "channel";
+	onSubmit?: (url: string) => void;
+	isLoading?: boolean;
 	optionsNode?: React.ReactNode;
+	// Custom input override — provide a fully-formed input component.
+	// When set, inputType/onSubmit/isLoading are not used for the input.
+	inputNode?: React.ReactNode;
 	children?: React.ReactNode;
 }
 
@@ -22,8 +26,9 @@ export default function ToolPageLayout({
 	iconName,
 	inputType,
 	onSubmit,
-	isLoading,
+	isLoading = false,
 	optionsNode,
+	inputNode,
 	children,
 }: ToolPageLayoutProps) {
 	const icons = LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>;
@@ -71,8 +76,16 @@ export default function ToolPageLayout({
 				{/* Options */}
 				{optionsNode && <div className="border-b border-primary/10 pb-5">{optionsNode}</div>}
 
-				{/* URL Input */}
-				<UrlInput inputType={inputType} onSubmit={onSubmit} isLoading={isLoading} />
+				{/* Input — custom or default UrlInput */}
+				{inputNode ? (
+					inputNode
+				) : (
+					<UrlInput
+						inputType={inputType ?? "video"}
+						onSubmit={onSubmit ?? (() => {})}
+						isLoading={isLoading}
+					/>
+				)}
 			</div>
 
 			{/* Results */}

@@ -3,8 +3,8 @@ package timestampgenerator
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"strings"
+	"youtube-tools/backend/internal/timestampkit"
 	"youtube-tools/backend/internal/tools"
 	"youtube-tools/backend/internal/urlkit"
 )
@@ -53,7 +53,8 @@ func (t *Tool) Execute(ctx context.Context, req tools.Request) (any, error) {
 	var formattedRows []string
 
 	for _, ts := range req.Timestamps {
-		seconds := parseTimestampToSeconds(ts.Time)
+		// Use shared timestampkit instead of local implementation
+		seconds, _ := timestampkit.ParseToSeconds(ts.Time)
 		deepLink := fmt.Sprintf("https://youtu.be/%s?t=%d", videoID, seconds)
 
 		links = append(links, LinkEntry{
@@ -73,23 +74,4 @@ func (t *Tool) Execute(ctx context.Context, req tools.Request) (any, error) {
 		Links:          links,
 		FormattedBlock: formattedBlock,
 	}, nil
-}
-
-func parseTimestampToSeconds(ts string) int {
-	ts = strings.TrimSpace(ts)
-	parts := strings.Split(ts, ":")
-	var secs, mins, hrs int
-
-	if len(parts) == 2 {
-		mins, _ = strconv.Atoi(parts[0])
-		secs, _ = strconv.Atoi(parts[1])
-	} else if len(parts) == 3 {
-		hrs, _ = strconv.Atoi(parts[0])
-		mins, _ = strconv.Atoi(parts[1])
-		secs, _ = strconv.Atoi(parts[2])
-	} else if len(parts) == 1 {
-		secs, _ = strconv.Atoi(parts[0])
-	}
-
-	return hrs*3600 + mins*60 + secs
 }

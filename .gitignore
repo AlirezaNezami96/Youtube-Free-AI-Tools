@@ -30,3 +30,8 @@ youtube-tools-server
 # OS specific files
 .DS_Store
 Thumbs.db
+
+# Firebase service account credentials (NEVER commit these)
+firebase-adminsdk*.json
+*-firebase-adminsdk-*.json
+service-account*.json

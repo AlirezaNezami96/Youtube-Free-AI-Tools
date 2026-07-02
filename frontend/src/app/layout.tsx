@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "@/components/providers";
 import SiteHeader from "@/components/shared/site-header";
 import SiteFooter from "@/components/shared/site-footer";
+import AnalyticsTracker from "@/lib/analytics-tracker";
 
 const spaceGrotesk = Space_Grotesk({
 	variable: "--font-display",
@@ -47,6 +48,7 @@ export default function RootLayout({
 		>
 			<body className="min-h-full flex flex-col bg-bg text-ink font-sans">
 				<Providers>
+					<AnalyticsTracker />
 					<SiteHeader />
 					<main className="flex-1 mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
 						{children}
