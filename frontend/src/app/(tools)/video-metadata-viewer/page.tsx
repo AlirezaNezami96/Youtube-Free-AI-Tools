@@ -91,7 +91,7 @@ export default function VideoMetadataViewerPage() {
 			isLoading={mutation.isPending}
 			optionsNode={optionsNode}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="video-metadata-viewer">
 				{mutation.data && (
 					<div className="space-y-6">
 						{/* Main Info Block */}

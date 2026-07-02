@@ -54,7 +54,7 @@ export default function ChannelRssFeedGeneratorPage() {
 			onSubmit={(url) => mutation.mutate(url)}
 			isLoading={mutation.isPending}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="channel-rss-feed-generator">
 				{mutation.data && (
 					<div className="space-y-5">
 						<div className="space-y-0.5">

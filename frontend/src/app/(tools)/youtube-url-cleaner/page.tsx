@@ -55,7 +55,7 @@ export default function YoutubeUrlCleanerPage() {
 			onSubmit={(url) => mutation.mutate(url)}
 			isLoading={mutation.isPending}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="youtube-url-cleaner">
 				{mutation.data && (
 					<div className="space-y-4">
 						{/* Cleaned Standard URL */}

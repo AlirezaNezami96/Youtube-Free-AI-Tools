@@ -157,7 +157,7 @@ export default function TimestampGeneratorPage() {
 				</div>
 			)}
 
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="timestamp-generator">
 				{generateMutation.data && (
 					<div className="space-y-6">
 						{/* Copyable Formatted Block */}

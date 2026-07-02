@@ -18,6 +18,7 @@ interface TranscriptSearchResult {
 	language: string;
 	lines: TranscriptLine[];
 	wordCount: number;
+	totalDuration: string;
 }
 
 export default function TranscriptSearchPage() {
@@ -85,14 +86,18 @@ export default function TranscriptSearchPage() {
 			onSubmit={(url) => mutation.mutate(url)}
 			isLoading={mutation.isPending}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="transcript-search">
 				{mutation.data && (
 					<div className="space-y-6">
 						{/* Meta Header */}
-						<div className="grid grid-cols-2 gap-4">
+						<div className="grid grid-cols-3 gap-4">
 							<div className="rounded-xl border border-primary/10 bg-bg p-4 space-y-0.5">
 								<span className="text-[10px] font-bold text-ink-soft/60 uppercase tracking-wider">Word Count</span>
 								<p className="text-2xl font-display font-extrabold text-primary-deep">{mutation.data.wordCount.toLocaleString()}</p>
+							</div>
+							<div className="rounded-xl border border-primary/10 bg-bg p-4 space-y-0.5">
+								<span className="text-[10px] font-bold text-ink-soft/60 uppercase tracking-wider">Total Length</span>
+								<p className="text-2xl font-display font-extrabold text-primary-deep font-mono">{mutation.data.totalDuration}</p>
 							</div>
 							<div className="rounded-xl border border-primary/10 bg-bg p-4 space-y-0.5">
 								<span className="text-[10px] font-bold text-ink-soft/60 uppercase tracking-wider">Language</span>

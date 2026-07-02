@@ -55,7 +55,7 @@ export default function YoutubeIdExtractorPage() {
 			onSubmit={(url) => mutation.mutate(url)}
 			isLoading={mutation.isPending}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="youtube-id-extractor">
 				{mutation.data && (
 					<div className="space-y-4">
 						{/* Video ID */}

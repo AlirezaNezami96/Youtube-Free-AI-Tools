@@ -82,43 +82,100 @@ export default function BulkMetadataExtractorPage() {
 		URL.revokeObjectURL(url);
 	};
 
-	const SortBtn = ({ k, label }: { k: SortKey; label: string }) => (
-		<button onClick={() => handleSort(k)} className="flex items-center gap-1 hover:text-primary-deep transition-colors">
-			{label}
-			{sortKey === k ? (sortAsc ? " ↑" : " ↓") : ""}
-		</button>
-	);
+	const handleDownloadJson = () => {
+		if (!sorted.length) return;
+		const payload = sorted.map(v => ({
+			index: v.index,
+			title: v.title,
+			channel: v.channel,
+			uploadDate: v.uploadDate,
+			durationSeconds: v.duration,
+			durationFormatted: v.durationFmt,
+			viewCount: v.viewCount,
+			likeCount: v.likeCount,
+			videoId: v.videoId,
+			url: v.url,
+			error: v.error
+		}));
+		const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a"); a.href = url; a.download = "bulk-metadata.json"; a.click();
+		URL.revokeObjectURL(url);
+	};
 
 	return (
 		<ToolPageLayout
 			title="Bulk Metadata Extractor"
-			description="Fetch metadata for up to 25 videos at once. Sort by any field and export as CSV."
+			description="Fetch metadata for up to 25 videos at once. Sort by any field and export as CSV or JSON."
 			iconName="Table"
 			inputNode={<BulkUrlInput onSubmit={(urls) => mutation.mutate(urls)} isLoading={mutation.isPending} />}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="bulk-metadata-extractor">
 				{sorted.length > 0 && (
 					<div className="space-y-4">
 						<div className="flex items-center justify-between">
 							<span className="text-sm font-bold text-ink">{sorted.length} video{sorted.length !== 1 ? "s" : ""}</span>
-							<button
-								onClick={handleDownloadCsv}
-								className="flex items-center gap-1.5 rounded-lg border border-primary/25 bg-white hover:bg-primary/5 px-3 py-1.5 text-xs font-bold text-primary-deep transition-all hover:border-primary-deep"
-							>
-								Export CSV
-							</button>
+							<div className="flex gap-2">
+								<button
+									onClick={handleDownloadCsv}
+									className="flex items-center gap-1.5 rounded-lg border border-primary/25 bg-white hover:bg-primary/5 px-3 py-1.5 text-xs font-bold text-primary-deep transition-all hover:border-primary-deep"
+								>
+									Export CSV
+								</button>
+								<button
+									onClick={handleDownloadJson}
+									className="flex items-center gap-1.5 rounded-lg border border-primary/25 bg-white hover:bg-primary/5 px-3 py-1.5 text-xs font-bold text-primary-deep transition-all hover:border-primary-deep"
+								>
+									Export JSON
+								</button>
+							</div>
 						</div>
 						<div className="overflow-x-auto rounded-xl border border-primary/15">
 							<table className="w-full text-xs text-ink">
 								<thead className="bg-primary/10 text-ink-soft font-bold uppercase tracking-wider">
 									<tr>
-										<th className="px-3 py-2 text-left"><SortBtn k="index" label="#" /></th>
-										<th className="px-3 py-2 text-left"><SortBtn k="title" label="Title" /></th>
-										<th className="px-3 py-2 text-left"><SortBtn k="channel" label="Channel" /></th>
-										<th className="px-3 py-2 text-right"><SortBtn k="uploadDate" label="Date" /></th>
-										<th className="px-3 py-2 text-right"><SortBtn k="duration" label="Duration" /></th>
-										<th className="px-3 py-2 text-right"><SortBtn k="viewCount" label="Views" /></th>
-										<th className="px-3 py-2 text-right"><SortBtn k="likeCount" label="Likes" /></th>
+										<th className="px-3 py-2 text-left">
+											<button onClick={() => handleSort("index")} className="flex items-center gap-1 hover:text-primary-deep transition-colors">
+												#
+												{sortKey === "index" ? (sortAsc ? " ↑" : " ↓") : ""}
+											</button>
+										</th>
+										<th className="px-3 py-2 text-left w-64">
+											<button onClick={() => handleSort("title")} className="flex items-center gap-1 hover:text-primary-deep transition-colors">
+												Title
+												{sortKey === "title" ? (sortAsc ? " ↑" : " ↓") : ""}
+											</button>
+										</th>
+										<th className="px-3 py-2 text-left w-40">
+											<button onClick={() => handleSort("channel")} className="flex items-center gap-1 hover:text-primary-deep transition-colors">
+												Channel
+												{sortKey === "channel" ? (sortAsc ? " ↑" : " ↓") : ""}
+											</button>
+										</th>
+										<th className="px-3 py-2 text-right">
+											<button onClick={() => handleSort("uploadDate")} className="flex items-center gap-1 hover:text-primary-deep transition-colors">
+												Published
+												{sortKey === "uploadDate" ? (sortAsc ? " ↑" : " ↓") : ""}
+											</button>
+										</th>
+										<th className="px-3 py-2 text-right">
+											<button onClick={() => handleSort("duration")} className="flex items-center gap-1 hover:text-primary-deep transition-colors">
+												Duration
+												{sortKey === "duration" ? (sortAsc ? " ↑" : " ↓") : ""}
+											</button>
+										</th>
+										<th className="px-3 py-2 text-right">
+											<button onClick={() => handleSort("viewCount")} className="flex items-center gap-1 hover:text-primary-deep transition-colors">
+												Views
+												{sortKey === "viewCount" ? (sortAsc ? " ↑" : " ↓") : ""}
+											</button>
+										</th>
+										<th className="px-3 py-2 text-right">
+											<button onClick={() => handleSort("likeCount")} className="flex items-center gap-1 hover:text-primary-deep transition-colors">
+												Likes
+												{sortKey === "likeCount" ? (sortAsc ? " ↑" : " ↓") : ""}
+											</button>
+										</th>
 									</tr>
 								</thead>
 								<tbody className="divide-y divide-primary/10">

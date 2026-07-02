@@ -63,7 +63,7 @@ export default function VideoDurationCalculatorPage() {
 			optionsNode={optionsNode}
 			inputNode={<BulkUrlInput onSubmit={(urls) => mutation.mutate(urls)} isLoading={mutation.isPending} />}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="video-duration-calculator">
 				{mutation.data && (
 					<div className="space-y-5">
 						<div className="grid grid-cols-2 gap-4">

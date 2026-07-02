@@ -60,7 +60,7 @@ export default function ChapterValidatorPage() {
 				/>
 			}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="chapter-validator">
 				{mutation.data && (
 					<div className="space-y-6">
 						{/* Status Header */}

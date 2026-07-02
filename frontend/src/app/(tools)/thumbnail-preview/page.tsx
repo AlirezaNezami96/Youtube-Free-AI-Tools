@@ -23,6 +23,7 @@ interface ThumbnailPreviewResult {
 
 export default function ThumbnailPreviewPage() {
 	const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+	const [activeTab, setActiveTab] = useState<"Desktop Homepage" | "Mobile Feed" | "Sidebar / Up Next">("Desktop Homepage");
 
 	const mutation = useMutation({
 		mutationFn: (url: string) => callToolApi<ThumbnailPreviewResult>("thumbnail-preview", url),
@@ -81,7 +82,7 @@ export default function ThumbnailPreviewPage() {
 			iconName="ImagePlay"
 			inputNode={inputNode}
 		>
-			<ResultsPanel status={uploadedImage ? "success" : status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={uploadedImage ? "success" : status} errorMsg={errorMsg} errorCode={errorCode} slug="thumbnail-preview">
 				{activeImageUrl && (
 					<div className="space-y-10">
 						{/* Active Image / CDN Info */}
@@ -101,51 +102,72 @@ export default function ThumbnailPreviewPage() {
 						)}
 
 						{/* Mockups */}
-						<div className="space-y-8">
-							<h3 className="font-display text-lg font-bold text-ink border-b border-primary/10 pb-2">Desktop Homepage Mockup</h3>
-							<div className="max-w-[360px] space-y-3 mx-auto md:mx-0">
-								<div className="aspect-video w-full rounded-xl overflow-hidden bg-black relative">
-									{/* eslint-disable-next-line @next/next/no-img-element */}
-									<img src={activeImageUrl} alt="Thumbnail" className="w-full h-full object-cover" />
-									<span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] font-bold px-1.5 rounded">12:34</span>
-								</div>
-								<div className="flex gap-3 px-1">
-									<div className="w-9 h-9 rounded-full bg-primary/20 shrink-0" />
-									<div className="space-y-1 w-full">
-										<p className="text-sm font-bold text-ink line-clamp-2 leading-tight">Your Video Title Looks Like This When Displayed on the Homepage</p>
-										<p className="text-xs text-ink-soft">Channel Name • 1.2M views • 2 days ago</p>
-									</div>
-								</div>
+						<div className="space-y-4">
+							<div className="flex flex-wrap gap-2 border-b border-primary/10 pb-2">
+								{["Desktop Homepage", "Mobile Feed", "Sidebar / Up Next"].map((tab) => (
+									<button
+										key={tab}
+										onClick={() => setActiveTab(tab as any)}
+										className={`px-4 py-2 text-sm font-bold transition-all border-b-2 -mb-[9px] ${
+											activeTab === tab
+												? "border-primary-deep text-primary-deep"
+												: "border-transparent text-ink-soft hover:text-ink hover:border-primary/20"
+										}`}
+									>
+										{tab}
+									</button>
+								))}
 							</div>
 
-							<h3 className="font-display text-lg font-bold text-ink border-b border-primary/10 pb-2">Mobile List Mockup</h3>
-							<div className="max-w-[480px] w-full border border-primary/10 rounded-xl overflow-hidden">
-								<div className="aspect-video w-full bg-black relative">
-									{/* eslint-disable-next-line @next/next/no-img-element */}
-									<img src={activeImageUrl} alt="Thumbnail" className="w-full h-full object-cover" />
-									<span className="absolute bottom-1 right-1 bg-black/80 text-white text-xs font-bold px-1.5 py-0.5 rounded">12:34</span>
-								</div>
-								<div className="p-3 flex gap-3">
-									<div className="w-10 h-10 rounded-full bg-primary/20 shrink-0" />
-									<div className="space-y-0.5">
-										<p className="text-base font-bold text-ink line-clamp-2 leading-tight">Your Video Title Looks Like This When Displayed on Mobile Devices</p>
-										<p className="text-sm text-ink-soft">Channel Name • 1.2M views • 2 days ago</p>
+							<div className="pt-4">
+								{activeTab === "Desktop Homepage" && (
+									<div className="max-w-[360px] space-y-3 mx-auto md:mx-0 animate-fadeSlideIn">
+										<div className="aspect-video w-full rounded-xl overflow-hidden bg-black relative">
+											{/* eslint-disable-next-line @next/next/no-img-element */}
+											<img src={activeImageUrl} alt="Thumbnail" className="w-full h-full object-cover" />
+											<span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] font-bold px-1.5 rounded">12:34</span>
+										</div>
+										<div className="flex gap-3 px-1">
+											<div className="w-9 h-9 rounded-full bg-primary/20 shrink-0" />
+											<div className="space-y-1 w-full">
+												<p className="text-sm font-bold text-ink line-clamp-2 leading-tight">Your Video Title Looks Like This When Displayed on the Homepage</p>
+												<p className="text-xs text-ink-soft">Channel Name • 1.2M views • 2 days ago</p>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
+								)}
 
-							<h3 className="font-display text-lg font-bold text-ink border-b border-primary/10 pb-2">Sidebar / Up Next Mockup</h3>
-							<div className="flex gap-2 max-w-[400px]">
-								<div className="w-[168px] aspect-video rounded-lg overflow-hidden bg-black shrink-0 relative">
-									{/* eslint-disable-next-line @next/next/no-img-element */}
-									<img src={activeImageUrl} alt="Thumbnail" className="w-full h-full object-cover" />
-									<span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] font-bold px-1 rounded">12:34</span>
-								</div>
-								<div className="space-y-0.5 py-0.5">
-									<p className="text-sm font-bold text-ink line-clamp-2 leading-tight">Your Video Title on Sidebar</p>
-									<p className="text-xs text-ink-soft">Channel Name</p>
-									<p className="text-xs text-ink-soft">1.2M views • 2 days ago</p>
-								</div>
+								{activeTab === "Mobile Feed" && (
+									<div className="max-w-[480px] w-full border border-primary/10 rounded-xl overflow-hidden animate-fadeSlideIn">
+										<div className="aspect-video w-full bg-black relative">
+											{/* eslint-disable-next-line @next/next/no-img-element */}
+											<img src={activeImageUrl} alt="Thumbnail" className="w-full h-full object-cover" />
+											<span className="absolute bottom-1 right-1 bg-black/80 text-white text-xs font-bold px-1.5 py-0.5 rounded">12:34</span>
+										</div>
+										<div className="p-3 flex gap-3">
+											<div className="w-10 h-10 rounded-full bg-primary/20 shrink-0" />
+											<div className="space-y-0.5">
+												<p className="text-base font-bold text-ink line-clamp-2 leading-tight">Your Video Title Looks Like This When Displayed on Mobile Devices</p>
+												<p className="text-sm text-ink-soft">Channel Name • 1.2M views • 2 days ago</p>
+											</div>
+										</div>
+									</div>
+								)}
+
+								{activeTab === "Sidebar / Up Next" && (
+									<div className="flex gap-2 max-w-[400px] animate-fadeSlideIn">
+										<div className="w-[168px] aspect-video rounded-lg overflow-hidden bg-black shrink-0 relative">
+											{/* eslint-disable-next-line @next/next/no-img-element */}
+											<img src={activeImageUrl} alt="Thumbnail" className="w-full h-full object-cover" />
+											<span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] font-bold px-1 rounded">12:34</span>
+										</div>
+										<div className="space-y-0.5 py-0.5">
+											<p className="text-sm font-bold text-ink line-clamp-2 leading-tight">Your Video Title on Sidebar</p>
+											<p className="text-xs text-ink-soft">Channel Name</p>
+											<p className="text-xs text-ink-soft">1.2M views • 2 days ago</p>
+										</div>
+									</div>
+								)}
 							</div>
 						</div>
 					</div>

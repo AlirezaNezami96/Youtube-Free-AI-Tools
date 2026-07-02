@@ -94,7 +94,7 @@ export default function TranscriptDownloaderPage() {
 			isLoading={mutation.isPending}
 			optionsNode={optionsNode}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="transcript-downloader">
 				{mutation.data && (
 					<div className="space-y-4 text-center sm:text-left">
 						<div className="space-y-1">

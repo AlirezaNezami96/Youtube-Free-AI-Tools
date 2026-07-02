@@ -51,7 +51,7 @@ export default function ShortsUrlConverterPage() {
 			onSubmit={(url) => mutation.mutate(url)}
 			isLoading={mutation.isPending}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="shorts-url-converter">
 				{mutation.data && (
 					<div className="space-y-3">
 						<span className="text-[10px] font-bold text-ink-soft/60 uppercase tracking-wider">

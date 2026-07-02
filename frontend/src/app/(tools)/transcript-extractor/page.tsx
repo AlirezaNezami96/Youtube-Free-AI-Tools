@@ -72,7 +72,7 @@ export default function TranscriptExtractorPage() {
 			isLoading={mutation.isPending}
 			optionsNode={optionsNode}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="transcript-extractor">
 				{mutation.data && (
 					<div className="space-y-4">
 						<div className="flex items-start justify-between gap-4">

@@ -92,7 +92,7 @@ export default function TimestampOffsetPage() {
 				/>
 			}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="timestamp-offset">
 				{mutation.data && (
 					<div className="space-y-5">
 						<div className="grid grid-cols-2 gap-4">

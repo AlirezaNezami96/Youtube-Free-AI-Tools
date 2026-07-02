@@ -129,7 +129,7 @@ export default function PlaylistDurationCalculatorPage() {
 			isLoading={mutation.isPending}
 			optionsNode={optionsNode}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="playlist-duration-calculator">
 				{mutation.data && (
 					<div className="space-y-5">
 						<div className="space-y-1">

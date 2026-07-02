@@ -1,16 +1,31 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ChannelPromo from "../shared/channel-promo";
+import { trackToolSucceeded, trackToolFailed } from "@/lib/firebase/analytics";
 
 interface ResultsPanelProps {
 	status: "idle" | "loading" | "success" | "error";
 	errorMsg?: string;
 	errorCode?: string;
+	slug?: string;
 	children?: React.ReactNode;
 }
 
-export default function ResultsPanel({ status, errorMsg, errorCode, children }: ResultsPanelProps) {
+export default function ResultsPanel({ status, errorMsg, errorCode, slug, children }: ResultsPanelProps) {
+	const prevStatus = useRef(status);
+
+	useEffect(() => {
+		if (status !== prevStatus.current && slug) {
+			if (status === "success") {
+				trackToolSucceeded(slug);
+			} else if (status === "error") {
+				trackToolFailed(slug, errorCode);
+			}
+		}
+		prevStatus.current = status;
+	}, [status, slug, errorCode]);
+
 	if (status === "idle") return null;
 
 	if (status === "loading") {

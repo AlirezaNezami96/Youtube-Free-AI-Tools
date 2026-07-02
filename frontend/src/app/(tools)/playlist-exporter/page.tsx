@@ -72,7 +72,7 @@ export default function PlaylistExporterPage() {
 			isLoading={mutation.isPending}
 			optionsNode={optionsNode}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="playlist-exporter">
 				{mutation.data && (
 					<div className="space-y-4 text-center sm:text-left">
 						<div className="space-y-1">

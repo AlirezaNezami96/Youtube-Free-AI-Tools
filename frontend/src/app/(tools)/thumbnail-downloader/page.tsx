@@ -75,7 +75,7 @@ export default function ThumbnailDownloaderPage() {
 			isLoading={mutation.isPending}
 			optionsNode={optionsNode}
 		>
-			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode}>
+			<ResultsPanel status={status} errorMsg={errorMsg} errorCode={errorCode} slug="thumbnail-downloader">
 				{mutation.data && (
 					<div className="space-y-5">
 						<div className="overflow-hidden rounded-xl border border-primary/20 bg-bg shadow-inner">
