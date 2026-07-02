@@ -12,6 +12,7 @@ import (
 	"strconv"
 	"strings"
 	"youtube-tools/backend/internal/config"
+	"youtube-tools/backend/internal/durationkit"
 	"youtube-tools/backend/internal/tools"
 	"youtube-tools/backend/internal/urlkit"
 	"youtube-tools/backend/internal/ytdlp"
@@ -45,11 +46,12 @@ type TranscriptLine struct {
 }
 
 type Result struct {
-	VideoID   string           `json:"videoId"`
-	Title     string           `json:"title"`
-	Language  string           `json:"language"`
-	Lines     []TranscriptLine `json:"lines"`
-	WordCount int              `json:"wordCount"`
+	VideoID       string           `json:"videoId"`
+	Title         string           `json:"title"`
+	Language      string           `json:"language"`
+	Lines         []TranscriptLine `json:"lines"`
+	WordCount     int              `json:"wordCount"`
+	TotalDuration string           `json:"totalDuration"`
 }
 
 func (t *Tool) Execute(ctx context.Context, req tools.Request) (any, error) {
@@ -95,12 +97,18 @@ func (t *Tool) Execute(ctx context.Context, req tools.Request) (any, error) {
 
 	videoID, _ := urlkit.ExtractVideoID(req.URL)
 
+	totalDurationFmt := "0:00"
+	if len(lines) > 0 {
+		totalDurationFmt = durationkit.FormatDuration(lines[len(lines)-1].Seconds)
+	}
+
 	return Result{
-		VideoID:   videoID,
-		Title:     title,
-		Language:  lang,
-		Lines:     lines,
-		WordCount: wordCount,
+		VideoID:       videoID,
+		Title:         title,
+		Language:      lang,
+		Lines:         lines,
+		WordCount:     wordCount,
+		TotalDuration: totalDurationFmt,
 	}, nil
 }
 
